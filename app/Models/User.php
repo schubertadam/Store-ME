@@ -50,6 +50,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class, 'users_x_roles');
     }
 
+    public function permissions(): BelongsToMany
+    {
+        return $this->belongsToMany(Permission::class, 'users_x_permissions');
+    }
+
     /**
      * Determine if the roles of a user is available in the $roles list
      * @param ...$roles
