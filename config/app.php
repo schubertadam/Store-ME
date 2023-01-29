@@ -196,6 +196,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         App\Providers\RoleServiceProvider::class,
+        App\Providers\PermissionServiceProvider::class,
     ],
 
     /*

@@ -77,4 +77,27 @@ class User extends Authenticatable
 
         return false;
     }
+
+    public function hasPermissionTo($permission): bool
+    {
+        return $this->hasPermissionThroughRole($permission) || $this->hasPermission($permission);
+    }
+
+    protected function hasPermissionThroughRole($permission): bool
+    {
+        foreach ($permission->roles as $role)
+        {
+            if ($this->roles->contains($role))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    protected function hasPermission($permission): bool
+    {
+        return (bool) $this->permissions->where('name', $permission->name)->count();
+    }
 }
