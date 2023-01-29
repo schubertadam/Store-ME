@@ -49,4 +49,27 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class, 'users_x_roles');
     }
+
+    /**
+     * Determine if the roles of a user is available in the $roles list
+     * @param ...$roles
+     * @return bool
+     */
+    public function hasRole(...$roles): bool
+    {
+        // if $roles is another variable length argument list
+        if (is_array(current($roles))) {
+            $roles = $roles[0];
+        }
+
+        foreach ($roles as $role)
+        {
+            if ($this->roles->contains('name', strtolower($role)))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
