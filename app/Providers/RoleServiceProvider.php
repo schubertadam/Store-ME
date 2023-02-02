@@ -16,8 +16,7 @@ class RoleServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        if (Schema::hasTable('users_x_roles'))
-        {
+        if (Schema::hasTable('users_x_roles')) {
             Blade::directive('role', function($role) {
                 return "<?php if((auth()->check()) && auth()->user()->hasRole({$role})): ?>";
             });

@@ -67,10 +67,8 @@ class User extends Authenticatable
             $roles = $roles[0];
         }
 
-        foreach ($roles as $role)
-        {
-            if ($this->roles->contains('name', strtolower($role)))
-            {
+        foreach ($roles as $role) {
+            if ($this->roles->contains('name', strtolower($role))) {
                 return true;
             }
         }
@@ -85,10 +83,8 @@ class User extends Authenticatable
 
     protected function hasPermissionThroughRole($permission): bool
     {
-        foreach ($permission->roles as $role)
-        {
-            if ($this->roles->contains($role))
-            {
+        foreach ($permission->roles as $role) {
+            if ($this->roles->contains($role)) {
                 return true;
             }
         }

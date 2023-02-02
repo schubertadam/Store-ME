@@ -9,8 +9,7 @@ class RoleMiddleware
 {
     public function handle(Request $request, Closure $next, ...$roles)
     {
-        if (!$request->user()->hasRole($roles))
-        {
+        if (!$request->user()->hasRole($roles)) {
             abort(403);
         }
 

@@ -9,8 +9,7 @@ class PermissionMiddleware
 {
     public function handle(Request $request, Closure $next, $permission)
     {
-        if ($permission !== null && !$request->user()->can($permission))
-        {
+        if ($permission !== null && !$request->user()->can($permission)) {
             abort(403);
         }
 
