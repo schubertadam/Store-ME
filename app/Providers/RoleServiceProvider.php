@@ -16,14 +16,19 @@ class RoleServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        if (Schema::hasTable('users_x_roles')) {
-            Blade::directive('role', function($role) {
-                return "<?php if((auth()->check()) && auth()->user()->hasRole({$role})): ?>";
-            });
+        try {
+            DB::connection()->getPdo();
 
-            Blade::directive('endrole', function($role) {
-                return "<?php endif; ?>";
-            });
+            if (Schema::hasTable('users_x_roles')) {
+                Blade::directive('role', function($role) {
+                    return "<?php if((auth()->check()) && auth()->user()->hasRole({$role})): ?>";
+                });
+
+                Blade::directive('endrole', function($role) {
+                    return "<?php endif; ?>";
+                });
+            }
+        } catch (\Exception $e) {
         }
     }
 }
