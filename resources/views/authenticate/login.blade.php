@@ -5,7 +5,7 @@
                 Login
             </h3>
         </x-slot:header>
-        <x-admin-panel.form.form action="#">
+        <x-admin-panel.form.form action="{{ route('login.store') }}">
             <x-admin-panel.form.input name="username"/>
             <x-admin-panel.form.input name="password" type="password"/>
             <x-admin-panel.form.checkbox name="remember" placeholder="Remember me"/>
