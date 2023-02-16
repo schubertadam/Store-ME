@@ -34,4 +34,17 @@ class AuthService implements AuthServiceInterface
 
         return true;
     }
+
+    public function logout(): bool
+    {
+        try {
+            auth()->logout();
+            request()->session()->invalidate();
+            request()->session()->regenerateToken();
+
+            return true;
+        } catch (\Throwable $t) {
+            return false;
+        }
+    }
 }
