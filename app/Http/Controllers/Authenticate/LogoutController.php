@@ -17,9 +17,11 @@ class LogoutController extends Controller
     public function __invoke(LogoutRequest $request)
     {
         if ($this->service->logout()) {
+            toastr()->success('Logout successful');
             return redirect()->route('login.index');
         }
 
+        toastr()->error('Error during logout');
         return back();
     }
 }

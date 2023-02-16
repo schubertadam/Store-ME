@@ -28,6 +28,7 @@ class AuthController extends Controller
             $data = array_merge($request->validated(), ['ip' => $request->ip(), 'remember' => !is_null($request->input('remember'))]);
             $this->service->login($data);
 
+            toastr()->success('Login successful');
             return redirect()->intended(route('dashboard'));
         } catch (ValidationException $e) {
 
