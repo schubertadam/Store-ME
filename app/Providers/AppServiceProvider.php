@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Services\AuthService\AuthService;
 use App\Services\AuthService\AuthServiceInterface;
+use App\Services\EmailService\EmailServiceInterface;
+use App\Services\EmailService\GmailEmailService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -16,6 +18,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(AuthServiceInterface::class, AuthService::class);
+        $this->app->bind(EmailServiceInterface::class, GmailEmailService::class);
     }
 
     /**
