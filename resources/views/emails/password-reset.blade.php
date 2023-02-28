@@ -10,7 +10,7 @@ Please click the button below, to reset your password.
 In case the button does not work, please copy the link below and paste it
 in the browser's search bar
 
-{{ route('password_reset.show', $token) }}
+<small>{{ route('password_reset.show', $token) }}</small>
 
 Thanks,<br>
 {{ config('app.name') }}
