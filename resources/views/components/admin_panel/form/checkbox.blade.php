@@ -10,7 +10,10 @@
         <label class="form-check-label small" id="{{ $name }}Label" for="{{ $name }}">{{ $placeholder ?? '' }}</label>
     </div>
 
-    @isset($statusText)
+    @isset($statuses)
+        @php
+            $statusText = explode('|', $statuses)
+        @endphp
     <script type="text/javascript">
         $(document).ready(function() {
             $('#{{ $name }}Label').html($('#{{ $name }}').is(':checked') ? '{{ $statusText[0] }}' : '{{ $statusText[1] }}');
