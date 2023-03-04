@@ -96,4 +96,9 @@ class User extends Authenticatable
     {
         return (bool) $this->permissions->where('name', $permission->name)->count();
     }
+
+    public function isAdmin(): bool
+    {
+        return $this->hasRole('administrator');
+    }
 }
