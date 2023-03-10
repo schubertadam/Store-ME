@@ -39,9 +39,7 @@ class PasswordResetController extends Controller
 
     public function update(UpdatePasswordResetRequest $request, string $token)
     {
-        $data = array_merge($request->validated(), ['token' => $token]);
-
-        if ($this->service->resetPassword($data)) {
+        if ($this->service->resetPassword($request->validated())) {
             toastr()->success('Password successfully updated');
             return redirect()->route('login.index');
         }

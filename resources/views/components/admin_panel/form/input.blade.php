@@ -1,7 +1,10 @@
 <div class="mb-3">
-    <label for="{{ $name }}" class="small mb-1">
-        {{ $label ?? ucfirst($name) }}
-    </label>
+    @if(isset($type) && $type == 'hidden')
+    @else
+        <label for="{{ $name }}" class="small mb-1">
+            {{ $label ?? ucfirst($name) }}
+        </label>
+    @endif
 
     <input type="{{ $type ?? 'text' }}" name="{{ $name }}" id="{{ $name }}"
            value="{{ old($name, $value ?? '') }}" placeholder="{{ $placeholder ?? '' }}"

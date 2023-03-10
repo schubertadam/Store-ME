@@ -52,11 +52,6 @@ class PasswordResetService implements PasswordResetServiceInterface
         $passwordReset = PasswordReset::query()->where(['token' => $requestData['token']])->first();
         $user = User::query()->where('email', $passwordReset->email)->first();
 
-        // in case someone tries with random token(s)
-        if (is_null($passwordReset) || is_null($user)) {
-            return true;
-        }
-
         // update password
         $user->password = Hash::make($requestData['password']);
 
