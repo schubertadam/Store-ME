@@ -1,10 +1,10 @@
 <x-layout.auth title="Password Recovery">
     <x-admin_panel.card.normal class="shadow-lg border-0 rounded-lg mt-5 mb-3">
         <x-slot:header>
-            <h3 class="fw-light my-4">Password Recovery</h3>
+            <h3 class="fw-light my-4">Change your password</h3>
         </x-slot:header>
 
-        <div class="small mb-3 text-muted">Enter you new password, and we will set it for you.</div>
+        <div class="small mb-3 text-muted">Enter the password you desire to use and we will set it for you.</div>
 
         <x-admin_panel.form.form action="{{ route('password_reset.update', $token) }}">
             @method('PUT')
