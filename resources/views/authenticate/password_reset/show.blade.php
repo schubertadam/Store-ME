@@ -8,7 +8,9 @@
 
         <x-admin_panel.form.form action="{{ route('password_reset.update', $token) }}">
             @method('PUT')
-            <x-admin_panel.form.input name="password" type="password" placeholder="password" value="{{ old('password') }}"/>
+            <x-admin_panel.form.input name="token" type="hidden" value="{{ $token }}"/>
+            <x-admin_panel.form.input name="email" type="email" placeholder="Email address"/>
+            <x-admin_panel.form.input name="password" type="password" placeholder="password"/>
             <x-admin_panel.form.input name="password_confirmation" type="password" placeholder="password again"/>
 
             @error('custom')
