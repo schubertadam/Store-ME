@@ -5,14 +5,16 @@ namespace App\Http\Controllers\Authenticate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Authenticate\StorePasswordResetRequest;
 use App\Http\Requests\Authenticate\UpdatePasswordResetRequest;
-use App\Services\PasswordResetService\PasswordResetServiceInterface;
+use App\Jobs\SendEmailJob;
+use App\Mail\PasswordResetMail;
+use App\Services\PasswordService\PasswordServiceInterface;
 use Illuminate\Contracts\View\View;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Illuminate\Database\QueryException;
 
 class PasswordResetController extends Controller
 {
     public function __construct(
-        private PasswordResetServiceInterface $service
+        private PasswordServiceInterface $service
     )
     {
     }
@@ -24,12 +26,17 @@ class PasswordResetController extends Controller
 
     public function store(StorePasswordResetRequest $request): View
     {
-        if ($this->service->sendPasswordResetEmail($request->validated())) {
-            return view('authenticate.password_reset.store_success');
-        }
+        try {
+            $entity = $this->service->createToken($request->validated());
 
-        toastr()->error('Something is wrong. Please contact the site administrator');
-        return view('authenticate.password_reset.index');
+            $mailable = new PasswordResetMail($entity->token);
+            $this->dispatch(new SendEmailJob($mailable, $entity->email));
+
+            return view('authenticate.password_reset.store_success');
+        } catch (QueryException $e) {
+            toastr()->error('Something is wrong. Please contact the site administrator');
+            return view('authenticate.password_reset.index');
+        }
     }
 
     public function show(string $token): View
@@ -39,7 +46,7 @@ class PasswordResetController extends Controller
 
     public function update(UpdatePasswordResetRequest $request, string $token)
     {
-        if ($this->service->resetPassword($request->validated())) {
+        if ($this->service->setPassword($request->validated())) {
             toastr()->success('Password successfully updated');
             return redirect()->route('login.index');
         }
