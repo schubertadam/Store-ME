@@ -27,10 +27,7 @@ class PasswordResetController extends Controller
     public function store(StorePasswordResetRequest $request): View
     {
         try {
-            $entity = $this->service->createToken($request->validated());
-
-            $mailable = new PasswordResetMail($entity->token);
-            $this->dispatch(new SendEmailJob($mailable, $entity->email));
+            $this->service->createToken($request->validated());
 
             return view('authenticate.password_reset.store_success');
         } catch (QueryException $e) {
